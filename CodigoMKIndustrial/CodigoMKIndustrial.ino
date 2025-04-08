@@ -36,8 +36,8 @@ int offset = 0, targetOffset = 0;
 // Velocidades
 unsigned int vel = 120;  // Promedio de velocidad entre los dos motores
 double motVel = 0;      // Salida del PID
-double mAVel = vel;     // Velocidad motor A
-double mBVel = vel;     // Velocidad motor B
+double mAVel = vel;     // Velocidad motor A, derecho
+double mBVel = vel;     // Velocidad motor B, izquierdo
 unsigned int targetVel = 255;
 
 // Variables globales adicionales para el control PID
@@ -59,6 +59,13 @@ unsigned long startedPressing = 0;
 int ledState = 0;
 unsigned long lastBlink = 0;
 
+//Variables para la logica de la industria
+bool bifurcacionDetected = false; //Se detecto una bifurcacion?
+int bifurcacion = 1; //Numero de bifurcacion
+bool direccionOrig = true; //La direccion = true, sumar; La direccion = false, restar
+int ronda = 0; //Numero de persona que va en la ronda
+bool cambioMatriz = false;
+
 // Esta función se encarga de la configuración inicial del sistema
 void setup() {
   configureIO();       // Configura entradas y salidas
@@ -76,6 +83,8 @@ void setup() {
   while (!funBotonesSetup()) {}  // Si retorna 0 sigue esperando, si retorna 1 el auto empieza a andar
 
   previousTime = currentTime;
+
+  attachInterrupt(digitalPinToInterrupt(2), sensorInterrupt, FALLING); //El pin esta para probar en arduino UNO, hay que cambiarlo segun la placa
 }
 
 // Esta función se encarga de leer los sensores y controlar los motores
@@ -91,6 +100,11 @@ void loop() {
   controlMotors();
   restrictMotorSpeed();
   applySpeed();
+
+  if(bifurcacionDetected == true)
+  {
+    bifurcation();
+  }
 }
 
 // Función para el control de los botones
@@ -263,4 +277,24 @@ void restrictMotorSpeed() {
 
   mAVel = constrain(mAVel, velMin, velMax);
   mBVel = constrain(mBVel, velMin, velMax);
+}
+
+void sensorInterrupt()
+{
+  mAVel = 0;
+  mBVel = 0;
+  bifurcacionDetected = true;
+}
+
+void bifurcation()
+{
+  if(ronda > 3 || direccionOrig == true)
+  {
+    mAVel = 0;
+    mBVel = 100;
+    bifurcacion + 3;
+    delay(600);
+    cambioMatriz = true;
+  }
+  else()
 }
