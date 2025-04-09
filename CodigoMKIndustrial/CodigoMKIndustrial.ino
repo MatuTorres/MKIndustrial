@@ -316,10 +316,13 @@ void bifurcation()
   }
 }
 
-void subirPrensa();
+void subirPrensa()
 {
   
 }
 
 
-void bajarPrensa();
+void bajarPrensa()
+{
+  
+}
