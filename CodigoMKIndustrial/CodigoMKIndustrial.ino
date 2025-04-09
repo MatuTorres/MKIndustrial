@@ -310,6 +310,16 @@ void bifurcation()
   
   else if(ronda == bifurcacion)
   {
+    mAVel = 0;
+    mBVel = 0;
     
   }
 }
+
+void subirPrensa();
+{
+  
+}
+
+
+void bajarPrensa();
