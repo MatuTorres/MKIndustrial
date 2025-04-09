@@ -65,6 +65,8 @@ int bifurcacion = 1; //Numero de bifurcacion
 bool direccionOrig = true; //La direccion = true, sumar; La direccion = false, restar
 int ronda = 0; //Numero de persona que va en la ronda
 bool cambioMatriz = false;
+int velocidadConstBif = 100;
+int delayBif = 600;
 
 // Esta función se encarga de la configuración inicial del sistema
 void setup() {
@@ -291,10 +293,23 @@ void bifurcation()
   if(ronda > 3 || direccionOrig == true)
   {
     mAVel = 0;
-    mBVel = 100;
+    mBVel = velocidadConstBif;
     bifurcacion + 3;
-    delay(600);
+    delay(delayBif);
     cambioMatriz = true;
   }
-  else()
+  
+  else if(ronda <= 3 || direccionOrig == true)
+  {
+    mAVel = velocidadConstBif;
+    mBVel = velocidadConstBif;
+    bifurcacion++;
+    delay(delayBif);
+    cambioMatriz = false;
+  }
+  
+  else if(ronda == bifurcacion)
+  {
+    
+  }
 }
