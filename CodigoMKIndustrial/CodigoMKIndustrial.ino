@@ -312,6 +312,15 @@ void bifurcation()
   {
     mAVel = 0;
     mBVel = 0;
+    bajarPrensa();
+    subirPrensa();
+    girar182();
+    ronda = 1;
+    direccionOrig == false;
+  }
+
+  else if(direccionOrig == false || bifurcacion < 3)
+  {
     
   }
 }
@@ -325,4 +334,13 @@ void subirPrensa()
 void bajarPrensa()
 {
   
+}
+
+void girar182() //Aguante blink!
+{
+  mAVel = 100;
+  mBVel = -100;
+  delay(delayBif);
+  mAVel = 0;
+  mBVel = 0;
 }
